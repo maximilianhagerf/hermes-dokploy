@@ -4,7 +4,7 @@ In Dokploy, create a new Compose project, point it at your git repo (or paste th
 
 OPENROUTER_API_KEY — your OpenRouter key
 BROWSER_USE_API_KEY — your Browser Use Cloud key
-HERMES_MODEL — start with openrouter/free
+HERMES_MODEL=openrouter/free
 
 Deploy. Then to actually use Hermes, SSH into your VPS box and run:
 
