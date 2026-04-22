@@ -1,0 +1,17 @@
+services:
+  hermes:
+    build: .
+    container_name: hermes
+    stdin_open: true
+    tty: true
+    environment:
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - BROWSER_USE_API_KEY=${BROWSER_USE_API_KEY}
+      - HERMES_MODEL=${HERMES_MODEL:-openrouter/free}
+    volumes:
+      - hermes-config:/root/.hermes
+      - hermes-harness-cache:/root/browser-harness/.cache
+
+volumes:
+  hermes-config:
+  hermes-harness-cache:
