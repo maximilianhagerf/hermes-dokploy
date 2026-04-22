@@ -8,6 +8,9 @@ services:
       - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
       - BROWSER_USE_API_KEY=${BROWSER_USE_API_KEY}
       - HERMES_MODEL=${HERMES_MODEL:-openrouter/free}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_ALLOWED_USERS=${TELEGRAM_ALLOWED_USERS}
+      - TELEGRAM_HOME_CHANNEL=${TELEGRAM_HOME_CHANNEL:-}
     volumes:
       - hermes-config:/root/.hermes
       - hermes-harness-cache:/root/browser-harness/.cache

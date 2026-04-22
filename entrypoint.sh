@@ -22,6 +22,9 @@ mkdir -p "$CONFIG_DIR"
 	[ -n "${GOOGLE_API_KEY:-}" ] && echo "GOOGLE_API_KEY=${GOOGLE_API_KEY}"
 	[ -n "${BROWSERBASE_API_KEY:-}" ] && echo "BROWSERBASE_API_KEY=${BROWSERBASE_API_KEY}"
 	[ -n "${BROWSERBASE_PROJECT_ID:-}" ] && echo "BROWSERBASE_PROJECT_ID=${BROWSERBASE_PROJECT_ID}"
+	[ -n "${TELEGRAM_BOT_TOKEN:-}" ] && echo "TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}"
+	[ -n "${TELEGRAM_ALLOWED_USERS:-}" ] && echo "TELEGRAM_ALLOWED_USERS=${TELEGRAM_ALLOWED_USERS}"
+	[ -n "${TELEGRAM_HOME_CHANNEL:-}" ] && echo "TELEGRAM_HOME_CHANNEL=${TELEGRAM_HOME_CHANNEL}"
 } >"$ENV_FILE"
 
 # ---------------------------------------------------------------------------

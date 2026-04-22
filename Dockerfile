@@ -36,4 +36,4 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 
 WORKDIR /root
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-CMD ["sleep", "infinity"]
+CMD ["hermes", "gateway", "run"]
