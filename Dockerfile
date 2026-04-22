@@ -3,13 +3,17 @@ FROM ubuntu:24.04
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PATH="/root/.local/bin:${PATH}"
 
-# Base tools — xz-utils is required by the Hermes installer to extract Node.js
+# Base tools. xz-utils needed by Hermes installer for Node.
+# ripgrep + ffmpeg are optional Hermes extras; installing here since
+# the installer runs apt without refreshing package lists.
 RUN apt-get update && apt-get install -y \
-    curl git ca-certificates bash sudo xz-utils \
+    curl git ca-certificates bash sudo xz-utils ripgrep ffmpeg \
  && rm -rf /var/lib/apt/lists/*
 
-# --- Hermes Agent (also installs uv + Python 3.11 + Node.js 22) ---
-RUN curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash
+# --- Hermes Agent (also installs uv + Python 3.11 + Node.js 22 + Playwright) ---
+# Redirect stdin from /dev/null so the interactive setup wizard at the end
+# of the installer exits cleanly instead of trying to read from a TTY.
+RUN curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash < /dev/null || true
 
 # --- Browser Harness ---
 WORKDIR /root
