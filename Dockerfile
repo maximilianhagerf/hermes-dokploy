@@ -3,17 +3,21 @@ FROM ubuntu:24.04
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PATH="/root/.local/bin:${PATH}"
 
-# Base tools. xz-utils needed by Hermes installer for Node.
-# ripgrep + ffmpeg are optional Hermes extras; installing here since
-# the installer runs apt without refreshing package lists.
 RUN apt-get update && apt-get install -y \
     curl git ca-certificates bash sudo xz-utils ripgrep ffmpeg \
  && rm -rf /var/lib/apt/lists/*
 
-# --- Hermes Agent (also installs uv + Python 3.11 + Node.js 22 + Playwright) ---
-# Redirect stdin from /dev/null so the interactive setup wizard at the end
-# of the installer exits cleanly instead of trying to read from a TTY.
-RUN curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash < /dev/null || true
+# --- Hermes Agent (installs uv + Python 3.11 + Node.js 22 + Playwright) ---
+# Download script first, then run with stdin redirected so the interactive
+# setup wizard at the end exits on EOF instead of hanging on /dev/tty.
+# `|| true` allows the wizard's non-zero exit, but we verify critical bits
+# landed on disk right after, so silent breakage fails the build.
+RUN curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh -o /tmp/hermes-install.sh \
+ && bash /tmp/hermes-install.sh </dev/null || true \
+ && rm /tmp/hermes-install.sh \
+ && test -x /root/.local/bin/uv \
+ && test -d /root/.hermes/hermes-agent \
+ && echo "Hermes install verified."
 
 # --- Browser Harness ---
 WORKDIR /root
@@ -27,7 +31,6 @@ RUN mkdir -p /root/.hermes/skills/browser-harness \
  && ln -sf /root/browser-harness/interaction-skills /root/.hermes/skills/browser-harness/interaction-skills \
  && ln -sf /root/browser-harness/domain-skills /root/.hermes/skills/browser-harness/domain-skills
 
-# First-run script: writes config from env vars
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
