@@ -9,7 +9,7 @@ HERMES_MODEL — start with openrouter/free
 Deploy. Then to actually use Hermes, SSH into your VPS box and run:
 
 ```bash
-bashdocker exec -it hermes hermes
+docker exec -it hermes hermes
 ```
 
 ## Switching models later
