@@ -19,6 +19,16 @@ RUN curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/
  && test -d /root/.hermes/hermes-agent \
  && echo "Hermes install verified."
 
+# --- Skill dependencies ---
+# Keep this minimal. Add more only when a skill actually fails for lack of them.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    tesseract-ocr \
+ && rm -rf /var/lib/apt/lists/*
+
+RUN /root/.local/bin/uv pip install --system --break-system-packages \
+    youtube-transcript-api \
+    yt-dlp
+
 # --- Browser Harness ---
 WORKDIR /root
 RUN git clone https://github.com/browser-use/browser-harness \

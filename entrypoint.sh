@@ -25,6 +25,7 @@ mkdir -p "$CONFIG_DIR"
 	[ -n "${TELEGRAM_BOT_TOKEN:-}" ] && echo "TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}"
 	[ -n "${TELEGRAM_ALLOWED_USERS:-}" ] && echo "TELEGRAM_ALLOWED_USERS=${TELEGRAM_ALLOWED_USERS}"
 	[ -n "${TELEGRAM_HOME_CHANNEL:-}" ] && echo "TELEGRAM_HOME_CHANNEL=${TELEGRAM_HOME_CHANNEL}"
+	[ -n "${GITHUB_TOKEN:-}" ] && echo "GITHUB_TOKEN=${GITHUB_TOKEN}"
 } >"$ENV_FILE"
 
 # ---------------------------------------------------------------------------
