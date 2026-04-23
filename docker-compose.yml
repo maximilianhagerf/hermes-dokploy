@@ -11,6 +11,8 @@ services:
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
       - TELEGRAM_ALLOWED_USERS=${TELEGRAM_ALLOWED_USERS}
       - TELEGRAM_HOME_CHANNEL=${TELEGRAM_HOME_CHANNEL:-}
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+
     volumes:
       - hermes-config:/root/.hermes
       - hermes-harness-cache:/root/browser-harness/.cache
